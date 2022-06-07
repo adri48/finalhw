@@ -4,6 +4,11 @@ class PlacesController < ApplicationController
     @places = Place.all
   end
 
+  def indexdef
+    @places = Place.all
+    @current_user = User.find_by({ "id" => session["user_id"] })
+  end
+
   def show
     @place = Place.find_by({ "id" => params["id"] })
     @posts = Post.where({ "place_id" => @place["id"] })
