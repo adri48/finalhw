@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Tacostagram Final</title>
+    <title>Travel Journal</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <link rel="stylesheet" href="/stylesheets/application.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   </head>
 
   <body>
-    <div>
+    <% if flash["notice"] %>
+    <div class="alert alert-warning mb-0" role="alert">
       <%= flash["notice"] %>
     </div>
-    <div>
-      <a href="/">Home</a>
-      <% if @current_user %>
-        <p>Logged in as: <%= @current_user["username"] %></p>
-        <a href="/logout">Logout</a>
-      <% else %>
-        <a href="/login">Login</a>
-        <a href="/users/new">Signup</a>
-       <% end %>
+    <% end %>
+    <nav class="py-2 bg-light border-bottom">
+      <ul class="container d-flex flex-wrap align-items-center nav">
+        <li class="nav-item me-auto"><a href="/" class="nav-link">Home</a></li>
+        <% if @current_user %>
+          <li class="nav-item"><p class="m-0">Logged in as: <%= @current_user["username"] %></p></li>
+          <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+        <% else %>
+          <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+          <li class="nav-item"><a href="/users/new" class="nav-link">Signup</a><li>
+        <% end %>
+      </ul>
+    </nav>
+
+    <div class="container py-4">
+      <%= yield %>
     </div>
 
-    <%= yield %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
   </body>
 </html>
