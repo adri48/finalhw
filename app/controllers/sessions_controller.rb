@@ -3,22 +3,20 @@ class SessionsController < ApplicationController
   end
 
   def create
-    
-     @user = User.find_by({ "email" => params["email"] })
-     if @user
-       if BCrypt::Password.new(@user["password"]) == params["password"]
-         session["user_id"] = @user["id"]
-         flash["notice"] = "Welcome, #{@user["first_name"]}."
-         redirect_to "/places"
-       else
-         flash["notice"] = "Sorry, authentication failed."
-         redirect_to "/login"
-       end
-     else
-       flash["notice"] = "Sorry, authentication failed."
-       redirect_to "/login"
-       
-     end
+    # authenticate the user
+    @user = User.find_by({ "email" => params["email"] })
+    if @user
+      if BCrypt::Password.new(@user["password"]) == params["password"]
+        session["user_id"] = @user["id"]
+        redirect_to "/places"
+      else
+        flash["notice"] = "Sorry, authentication failed. Please check your email and password."
+        redirect_to "/login"
+      end
+    else
+      flash["notice"] = "Sorry, authentication failed. Please check your email and password."
+      redirect_to "/login"
+    end
   end
 
   def destroy
