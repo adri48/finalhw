@@ -17,4 +17,8 @@
     <%= form.submit "Add Post", :class => "btn btn-primary" %>
   </p>
   <%= form.hidden_field "place_id" %>
+  <% if post.uploaded_image.attached? %>
+  <img src="<%= url_for(post.uploaded_image) %>" class="img-fluid">
+<% else %>
+  <img src="<%= post["image"] %>" class="img-fluid">
 <% end %>
